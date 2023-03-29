@@ -17,17 +17,17 @@ AXIS 0 -> ROLL
 
 # Create a socket connection to Rust
 HOST = 'localhost'
-PORT = 8000
+PORT = 3333
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
 
 def send_input_data(input_data):
     # Convert input data to a JSON string
-    json_data = json.dumps(input_data)
+    json_data = json.dumps(input_data).encode('utf-8')
 
     # Send the JSON data to Rust
-    s.sendall(json_data.encode())
+    s.sendall(json_data)
 
 
 def read_input_data():
@@ -42,7 +42,7 @@ def read_input_data():
                 send_input_data(input_data)
 
         # Wait for a short time to avoid overloading the system
-        time.sleep(0.0001)
+            time.sleep(0.001)
 
 
 # Create a separate thread for reading joystick input and sending to Rust
