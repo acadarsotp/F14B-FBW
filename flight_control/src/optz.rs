@@ -32,7 +32,7 @@ pub(crate) fn handle_client(mut stream: TcpStream) -> std::io::Result<()> {
     // Loop indefinitely to read data from the stream
     loop {
         // Create a buffer to read incoming data
-        let mut buf = [0; 80000];
+        let mut buf = [0; 50];
 
         // Read data from the stream and check if the read operation succeeded and if any data was read
         match stream.read(&mut buf) {
