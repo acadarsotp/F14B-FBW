@@ -34,7 +34,8 @@ def read_input_data():
     while True:
         # Handle joystick events
         for event in pygame.event.get():
-            if event.type == pygame.JOYAXISMOTION or event.type == pygame.JOYBUTTONDOWN:
+            if event.type == pygame.JOYAXISMOTION or event.type == pygame.JOYBUTTONDOWN \
+                    or event.type == pygame.JOYBUTTONUP:
                 # Get input data from joystick
                 input_data = joystick.get_input()
 
