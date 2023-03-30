@@ -1,8 +1,5 @@
-use serde::Deserialize;
-use std::io::Read;
-use std::net::{TcpListener, TcpStream};
-mod optz;
-use optz::Input;
+use std::net::TcpListener;
+mod data_link;
 
 
 fn main() -> std::io::Result<()> {
@@ -16,7 +13,7 @@ fn main() -> std::io::Result<()> {
                 println!("New connection: {}", stream.peer_addr()?);
                 std::thread::spawn(move || {
                     // connection succeeded
-                    optz::handle_client(stream).unwrap_or_else(|error| {
+                    data_link::handle_client(stream).unwrap_or_else(|error| {
                         eprintln!("Error: {}", error);
                     });
                 });
@@ -29,4 +26,7 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
+
+
+
 

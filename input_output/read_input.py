@@ -8,7 +8,6 @@ class Joystick:
         self.num_axes = self.joystick.get_numaxes()
         self.num_buttons = self.joystick.get_numbuttons()
         self.num_hats = self.joystick.get_numhats()
-        self.num_balls = self.joystick.get_numballs()
 
     def __enter__(self):
         return self
@@ -23,7 +22,6 @@ class Joystick:
             'num_axes': self.num_axes,
             'num_buttons': self.num_buttons,
             'num_hats': self.num_hats,
-            # 'num_balls': self.num_balls
         }
         return info
 
@@ -33,9 +31,7 @@ class Joystick:
         time = pygame.time.get_ticks()
         axes = [self.joystick.get_axis(i) for i in range(self.num_axes)]
         buttons = [self.joystick.get_button(i) for i in range(self.num_buttons)]
-        hats = [list(self.joystick.get_hat(i)) for i in range(self.num_hats)]
-        # remove list to go back to original
-        # 'balls': [self.joystick.get_ball(i) for i in range(self.num_balls)]
+        hats = [self.joystick.get_hat(i) for i in range(self.num_hats)]
         data = {
             "time": time,
             "axis_0": axes[0],
@@ -55,8 +51,14 @@ class Joystick:
             "button_9": buttons[9],
             "button_10": buttons[10],
             "button_11": buttons[11],
-            "hat_0": (hats[0][0], hats[0][1]),
+            "hat_0": hats[0],  # Get the hat input as a tuple
         }
+        return self.convert_hat_input(data)
+
+    @staticmethod
+    def convert_hat_input(data):
+        """Convert the hat input from string format to integer format."""
+        hat_input = data['hat_0']
+        x, y = int(hat_input[0]), int(hat_input[1])
+        data['hat_0'] = (x, y)
         return data
-
-

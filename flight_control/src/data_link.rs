@@ -1,7 +1,8 @@
 use serde::Deserialize;
 use std::io::Read;
-use std::net::{TcpListener, TcpStream};
+use std::net::TcpStream;
 
+#[allow(dead_code)]
 #[derive(Deserialize, Debug)]
 pub(crate) struct Input {
     time: u32,
@@ -32,7 +33,7 @@ pub(crate) fn handle_client(mut stream: TcpStream) -> std::io::Result<()> {
     // Loop indefinitely to read data from the stream
     loop {
         // Create a buffer to read incoming data
-        let mut buf = [0; 50];
+        let mut buf = [0; 2048];
 
         // Read data from the stream and check if the read operation succeeded and if any data was read
         match stream.read(&mut buf) {
@@ -63,3 +64,4 @@ pub(crate) fn handle_client(mut stream: TcpStream) -> std::io::Result<()> {
 
     Ok(())
 }
+

@@ -35,15 +35,15 @@ def read_input_data():
         # Handle joystick events
         for event in pygame.event.get():
             if event.type == pygame.JOYAXISMOTION or event.type == pygame.JOYBUTTONDOWN \
-                    or event.type == pygame.JOYBUTTONUP:
+                    or event.type == pygame.JOYBUTTONUP or event.type == pygame.JOYHATMOTION:
                 # Get input data from joystick
                 input_data = joystick.get_input()
 
                 # Send input data to Rust
                 send_input_data(input_data)
 
-        # Wait for a short time to avoid overloading the system
-            time.sleep(0.001)
+                # Wait for a short time to avoid overloading the system
+                time.sleep(0.0001)
 
 
 # Create a separate thread for reading joystick input and sending to Rust
@@ -52,8 +52,3 @@ input_thread.start()
 
 # Create joystick instance
 joystick = Joystick(joystick_id)
-
-# Loop forever
-while True:
-    # Wait for a short time to avoid overloading the system
-    time.sleep(0.0001)
